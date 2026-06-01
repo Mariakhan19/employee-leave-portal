@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Employee Leave Portal</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#4f46e5,#9333ea);
+}
+
+.container{
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+    color:#333;
+}
+
+.subtitle{
+    text-align:center;
+    color:gray;
+    margin-bottom:25px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:14px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#4f46e5;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#3730a3;
+}
+
+#message{
+    margin-top:15px;
+    text-align:center;
+    color:green;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Leave Portal</h1>
+
+    <p class="subtitle">
+        Submit your leave request easily
+    </p>
+
+    <form id="leaveForm">
+
+        <label>Employee Name</label>
+        <input type="text" id="name" required>
+
+        <label>Department</label>
+        <input type="text" id="department" required>
+
+        <label>Leave Type</label>
+        <select id="leaveType">
+
+            <option>Annual Leave</option>
+            <option>Sick Leave</option>
+            <option>Casual Leave</option>
+            <option>Maternity Leave</option>
+            <option>Emergency Leave</option>
+
+        </select>
+
+        <label>Leave Days</label>
+        <input type="number" id="leaveDays" required>
+
+        <button type="submit">
+            Submit Leave Request
+        </button>
+
+    </form>
+
+    <h3 id="message"></h3>
+
+</div>
+
+<script>
+
+document.getElementById("leaveForm").addEventListener("submit", async (e)=>{
+
+    e.preventDefault();
+
+    const data = {
+
+        name: document.getElementById("name").value,
+        department: document.getElementById("department").value,
+        leaveType: document.getElementById("leaveType").value,
+        leaveDays: document.getElementById("leaveDays").value
+
+    };
+
+    const response = await fetch("http://localhost:5000/api/leave",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(data)
+
+    });
+
+    const result = await response.json();
+
+    document.getElementById("message").innerText =
+    result.message;
+
+});
+
+</script>
+
+</body>
+</html>
