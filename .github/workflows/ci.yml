@@ -20,54 +20,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Backend Image
-        run: |
-          docker build -t mariakhan19/employee-backend:latest ./backend
+        run: docker build -t mariakhan19/employee-backend:latest ./backend
 
       - name: Build Frontend Image
-        run: |
-          docker build -t mariakhan19/employee-frontend:latest ./frontend
+        run: docker build -t mariakhan19/employee-frontend:latest ./frontend
 
       - name: Push Backend Image
-        run: |
-          docker push mariakhan19/employee-backend:latest
+        run: docker push mariakhan19/employee-backend:latest
 
       - name: Push Frontend Image
-        run: |
-          docker push mariakhan19/employee-frontend:latestname: Employee Leave Portal CI
-
-on:
-  push:
-    branches:
-      - main
-
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Backend Dependencies
-        run: |
-          cd backend
-          npm install
-
-      - name: Backend Build Check
-        run: |
-          cd backend
-          echo "Backend Build Successful"
-
-      - name: Frontend Check
-        run: |
-          cd frontend
-          echo "Frontend Build Successful"
+        run: docker push mariakhan19/employee-frontend:latest
